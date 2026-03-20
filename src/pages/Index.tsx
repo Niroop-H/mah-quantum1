@@ -158,7 +158,7 @@ export default function Home() {
       <div className="relative z-20 flex flex-col items-center gap-6 px-6 text-center">
         {/* Glass panel with animated neon red border */}
         <div
-          className={`relative rounded-3xl p-10 sm:p-14 flex flex-col items-center gap-6 transition-all duration-[1200ms] ease-out ${
+          className={`group relative rounded-3xl p-10 sm:p-14 flex flex-col items-center gap-6 max-w-2xl transition-all duration-[1200ms] ease-out ${
             loaded
               ? "opacity-100 translate-y-0 blur-0 scale-100"
               : "opacity-0 translate-y-8 blur-md scale-95"
@@ -168,8 +168,34 @@ export default function Home() {
             backdropFilter: "blur(40px) saturate(1.4)",
             WebkitBackdropFilter: "blur(40px) saturate(1.4)",
             boxShadow: "0 8px 60px rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.04), 0 0 80px rgba(220,38,38,0.06)",
+            transition: "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease-out, filter 1.2s ease-out, scale 1.2s ease-out",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget;
+            el.style.transform = "translateY(-4px)";
+            el.style.boxShadow = "0 12px 60px rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.06), 0 0 100px rgba(220,38,38,0.12), 0 12px 40px rgba(220,38,38,0.08)";
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget;
+            el.style.transform = "translateY(0)";
+            el.style.boxShadow = "0 8px 60px rgba(0,0,0,0.5), inset 0 1px 0 0 rgba(255,255,255,0.04), 0 0 80px rgba(220,38,38,0.06)";
           }}
         >
+          {/* Radial highlight on hover */}
+          <div
+            className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style={{
+              background: "radial-gradient(600px circle at 50% 0%, rgba(220,38,38,0.08), transparent 60%)",
+            }}
+          />
+          {/* Edge shimmer on hover */}
+          <div
+            className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+            style={{
+              background: "linear-gradient(135deg, rgba(220,38,38,0.05), transparent 40%, rgba(220,38,38,0.03), transparent 70%)",
+            }}
+          />
+
           {/* Animated neon red border */}
           <div
             className="absolute inset-0 rounded-3xl pointer-events-none"
@@ -209,9 +235,9 @@ export default function Home() {
 
           {/* Heading */}
           <h1
-            className="relative font-display font-bold text-5xl sm:text-7xl lg:text-8xl tracking-[0.08em] uppercase"
+            className="relative font-display font-bold text-3xl sm:text-4xl lg:text-5xl tracking-[0.08em] uppercase"
             style={{
-              lineHeight: 1.05,
+              lineHeight: 1.1,
               textShadow: "0 0 60px rgba(220,40,40,0.3), 0 0 120px rgba(220,40,40,0.1)",
             }}
           >
@@ -219,8 +245,8 @@ export default function Home() {
           </h1>
 
           {/* Subheading */}
-          <p className="relative text-white/45 text-sm sm:text-base tracking-[0.25em] uppercase font-medium">
-            Unified Intelligence Systems
+          <p className="relative text-white/40 text-xs sm:text-sm leading-relaxed max-w-md tracking-wide">
+            At MAH Quantum, we engineer unified intelligence systems that transform operational complexity into measurable, scalable outcomes.
           </p>
 
           {/* Red neon line */}
