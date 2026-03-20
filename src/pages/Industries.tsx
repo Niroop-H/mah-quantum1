@@ -3,6 +3,8 @@ import Section from "@/components/Section";
 import GlassCard from "@/components/GlassCard";
 import { Factory, Truck, HeartPulse, Store, Zap, Users } from "lucide-react";
 
+const glowColors = ["blue", "purple", "pink", "multi", "blue", "purple"] as const;
+
 const industries = [
   {
     icon: Factory,
@@ -63,42 +65,44 @@ const industries = [
 export default function Industries() {
   return (
     <Layout>
-      <section className="relative py-20 lg:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+      <section className="relative py-24 lg:py-32 overflow-hidden animated-gradient-bg">
+        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
+        <div className="orb orb-purple w-[400px] h-[400px] top-[10%] right-[-10%] animate-orb-drift" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center space-y-4">
-          <h1 className="font-display font-bold text-4xl sm:text-5xl">
+          <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08]">
             Industry <span className="gradient-text">Applications</span>
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Quantum [-0-] Brain deploys across verticals, solving real operational challenges with adaptive intelligence.
           </p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 neon-line" />
       </section>
 
       {industries.map((ind, idx) => (
-        <Section key={idx} className="py-14 lg:py-20">
+        <Section key={idx} className="py-16 lg:py-24">
           <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-3 rounded-xl bg-primary/10">
+            <div className="flex items-center gap-3 mb-10">
+              <div className="p-3 rounded-xl glass glow-blue">
                 <ind.icon className="h-6 w-6 text-primary" />
               </div>
               <h2 className="font-display font-bold text-xl sm:text-2xl">{ind.title}</h2>
             </div>
             <div className="grid md:grid-cols-3 gap-5">
               {ind.items.map((item, i) => (
-                <GlassCard key={i}>
-                  <div className="space-y-3">
+                <GlassCard key={i} glow glowColor={glowColors[idx]}>
+                  <div className="space-y-4">
                     <div>
-                      <span className="text-xs font-semibold text-accent uppercase tracking-wider">Problem</span>
-                      <p className="text-sm text-muted-foreground mt-1">{item.problem}</p>
+                      <span className="inline-block text-[10px] font-bold text-accent uppercase tracking-widest bg-accent/10 px-2 py-0.5 rounded-md">Problem</span>
+                      <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{item.problem}</p>
                     </div>
                     <div>
-                      <span className="text-xs font-semibold text-primary uppercase tracking-wider">Solution</span>
-                      <p className="text-sm text-foreground mt-1">{item.solution}</p>
+                      <span className="inline-block text-[10px] font-bold text-primary uppercase tracking-widest bg-primary/10 px-2 py-0.5 rounded-md">Solution</span>
+                      <p className="text-sm text-foreground mt-1.5 leading-relaxed">{item.solution}</p>
                     </div>
                     <div>
-                      <span className="text-xs font-semibold text-neon-cyan uppercase tracking-wider">Impact</span>
-                      <p className="text-sm font-medium text-foreground mt-1">{item.impact}</p>
+                      <span className="inline-block text-[10px] font-bold text-neon-cyan uppercase tracking-widest bg-neon-cyan/10 px-2 py-0.5 rounded-md">Impact</span>
+                      <p className="text-sm font-medium text-foreground mt-1.5">{item.impact}</p>
                     </div>
                   </div>
                 </GlassCard>

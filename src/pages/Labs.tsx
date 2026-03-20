@@ -7,57 +7,80 @@ const sections = [
   {
     icon: Lightbulb,
     title: "What We Do",
-    content:
-      "MAH Quantum Labs is the research and development arm focused on building next-generation AI systems. We tackle real-world problems through hands-on experimentation, rapid prototyping, and iterative deployment. Every project starts with a concrete challenge and ends with a deployed solution.",
+    points: [
+      "Build next-generation AI systems through hands-on R&D",
+      "Tackle real-world problems with rapid prototyping",
+      "Every project starts with a concrete challenge, ends with a deployed solution",
+    ],
+    glow: "blue" as const,
   },
   {
     icon: Wrench,
     title: "How It Works",
-    content:
-      "Our process is engineering-first. We identify operational bottlenecks, design modular AI components using the Quantum [-0-] Brain framework, validate through simulation and controlled testing, then deploy into live environments with continuous monitoring and adaptation loops.",
+    points: [
+      "Engineering-first process — identify operational bottlenecks",
+      "Design modular AI components using Quantum [-0-] Brain framework",
+      "Validate through simulation, deploy into live environments with continuous monitoring",
+    ],
+    glow: "purple" as const,
   },
   {
     icon: Trophy,
     title: "Outcomes",
-    content:
-      "From predictive maintenance systems in manufacturing plants to intelligent scheduling engines in healthcare — Labs delivers production-grade solutions. Our work has resulted in measurable efficiency gains, cost reductions, and operational clarity for every partner we work with.",
+    points: [
+      "Predictive maintenance systems in manufacturing plants",
+      "Intelligent scheduling engines in healthcare",
+      "Measurable efficiency gains and cost reductions for every partner",
+    ],
+    glow: "pink" as const,
   },
 ];
 
 export default function Labs() {
   return (
     <Layout>
-      <section className="relative py-20 lg:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-secondary/5 blur-[140px]" />
+      <section className="relative py-24 lg:py-32 overflow-hidden animated-gradient-bg">
+        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
+        <div className="orb orb-pink w-[400px] h-[400px] top-[20%] left-[-10%] animate-orb-drift" />
+        <div className="orb orb-blue w-[300px] h-[300px] bottom-[10%] right-[-5%] animate-orb-drift-reverse" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-medium text-primary mb-2">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-xs font-medium text-primary border border-primary/20">
             <Beaker size={14} /> Research & Development
           </div>
-          <h1 className="font-display font-bold text-4xl sm:text-5xl">
+          <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08]">
             MAH Quantum <span className="gradient-text">Labs</span>
           </h1>
           <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Hands-on AI system development. Real-world problem solving. An innovation-driven environment where engineering meets intelligence.
           </p>
         </div>
+        <div className="absolute bottom-0 left-0 right-0 neon-line" />
       </section>
 
-      {sections.map((s, i) => (
-        <Section key={i} className="py-14 lg:py-20">
-          <div className="container mx-auto px-4 lg:px-8 max-w-3xl">
-            <GlassCard glow={i === 0}>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <s.icon className="h-5 w-5 text-primary" />
+      <Section className="py-20 lg:py-28">
+        <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
+          <div className="grid md:grid-cols-3 gap-6">
+            {sections.map((s, i) => (
+              <GlassCard key={i} glow glowColor={s.glow}>
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="p-2.5 rounded-xl bg-primary/10">
+                    <s.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h2 className="font-display font-bold text-lg">{s.title}</h2>
                 </div>
-                <h2 className="font-display font-bold text-xl">{s.title}</h2>
-              </div>
-              <p className="text-muted-foreground leading-relaxed">{s.content}</p>
-            </GlassCard>
+                <ul className="space-y-3">
+                  {s.points.map((p, j) => (
+                    <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </GlassCard>
+            ))}
           </div>
-        </Section>
-      ))}
+        </div>
+      </Section>
     </Layout>
   );
 }
