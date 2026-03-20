@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { Cpu, Factory, FlaskConical, Users, Mail, ArrowRight } from "lucide-react";
-import logo from "@/assets/mah-quantum-logo.jpeg";
+import heroBg from "@/assets/hero-bg.png";
 
 const menuItems = [
   { label: "Architecture", to: "/architecture", icon: Cpu },
@@ -11,71 +11,215 @@ const menuItems = [
   { label: "Contact", to: "/contact", icon: Mail },
 ];
 
-export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+}
+
+function ParticleField() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const animFrameRef = useRef<number>(0);
+  const counterRef = useRef(0);
+
+  const createParticle = useCallback((w: number, h: number): Particle => {
+    counterRef.current += 1;
+    const maxLife = 300 + Math.random() * 400;
+    return {
+      id: counterRef.current,
+      x: Math.random() * w,
+      y: Math.random() * h,
+      size: Math.random() * 2 + 0.5,
+      opacity: 0,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3 - 0.15,
+      life: 0,
+      maxLife,
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    // Seed particles
+    for (let i = 0; i < 80; i++) {
+      const p = createParticle(canvas.width, canvas.height);
+      p.life = Math.random() * p.maxLife;
+      particlesRef.current.push(p);
+    }
+
+    const loop = () => {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Maintain count
+      while (particlesRef.current.length < 80) {
+        particlesRef.current.push(createParticle(w, h));
+      }
+
+      particlesRef.current = particlesRef.current.filter((p) => {
+        p.life += 1;
+        if (p.life > p.maxLife) return false;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Fade in/out
+        const fadeIn = Math.min(p.life / 60, 1);
+        const fadeOut = Math.min((p.maxLife - p.life) / 60, 1);
+        p.opacity = fadeIn * fadeOut * 0.6;
+
+        // Draw
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220, 40, 40, ${p.opacity})`;
+        ctx.fill();
+
+        // Glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(220, 40, 40, ${p.opacity * 0.15})`;
+        ctx.fill();
+
+        return true;
+      });
+
+      animFrameRef.current = requestAnimationFrame(loop);
+    };
+
+    animFrameRef.current = requestAnimationFrame(loop);
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [createParticle]);
 
   return (
-    <div className="fixed inset-0 bg-[hsl(220,15%,4%)] text-white flex flex-col items-center justify-center overflow-hidden select-none">
-      {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[hsl(210,100%,50%)] opacity-[0.04] blur-[120px] pointer-events-none" />
-      <div className="absolute top-[30%] left-[20%] w-[300px] h-[300px] rounded-full bg-[hsl(270,80%,55%)] opacity-[0.03] blur-[100px] pointer-events-none" />
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 z-10 pointer-events-none"
+    />
+  );
+}
 
-      {/* Subtle grid */}
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoaded(true), 100);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 bg-black text-white flex flex-col items-center justify-center overflow-hidden select-none">
+      {/* Background image */}
+      <img
+        src={heroBg}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover opacity-90 z-0"
+      />
+
+      {/* Dark overlay for text legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/50 z-[1]" />
+
+      {/* Particles */}
+      <ParticleField />
+
+      {/* Scanline effect */}
       <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage:
-            "linear-gradient(hsl(210,20%,30%) 1px, transparent 1px), linear-gradient(90deg, hsl(210,20%,30%) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+          backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
         }}
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6">
-        {/* Logo */}
-        <img
-          src={logo}
-          alt="MAH Quantum"
-          className="h-16 w-16 rounded-2xl object-cover shadow-[0_0_40px_hsl(210,100%,50%,0.15)]"
+      <div className="relative z-20 flex flex-col items-center gap-6 px-6 text-center">
+        {/* Heading */}
+        <h1
+          className={`font-display font-bold text-5xl sm:text-7xl lg:text-8xl tracking-[0.08em] uppercase transition-all duration-[1200ms] ease-out ${
+            loaded
+              ? "opacity-100 translate-y-0 blur-0"
+              : "opacity-0 translate-y-6 blur-sm"
+          }`}
+          style={{
+            lineHeight: 1.05,
+            textShadow: "0 0 60px rgba(220,40,40,0.3), 0 0 120px rgba(220,40,40,0.1)",
+          }}
+        >
+          MAH Quantum
+        </h1>
+
+        {/* Subheading */}
+        <p
+          className={`text-white/50 text-sm sm:text-base tracking-[0.25em] uppercase font-medium transition-all duration-[1200ms] delay-300 ease-out ${
+            loaded
+              ? "opacity-100 translate-y-0 blur-0"
+              : "opacity-0 translate-y-4 blur-sm"
+          }`}
+        >
+          Unified Intelligence Systems
+        </p>
+
+        {/* Red neon line */}
+        <div
+          className={`w-48 h-px my-2 transition-all duration-[1400ms] delay-500 ease-out ${
+            loaded ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+          }`}
+          style={{
+            background: "linear-gradient(90deg, transparent, #dc2626, transparent)",
+            boxShadow: "0 0 12px rgba(220,38,38,0.6), 0 0 40px rgba(220,38,38,0.2)",
+          }}
         />
 
-        {/* Heading */}
-        <div className="text-center space-y-3">
-          <h1
-            className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl tracking-tight"
-            style={{ lineHeight: 1.05 }}
-          >
-            MAH Quantum
-          </h1>
-          <p className="text-[hsl(210,15%,55%)] text-base sm:text-lg tracking-[0.15em] uppercase font-medium">
-            Unified Intelligence Systems
-          </p>
-        </div>
-
-        {/* Enter button */}
-        <div className="relative mt-4">
+        {/* Button */}
+        <div
+          className={`relative mt-2 transition-all duration-[1200ms] delay-700 ease-out ${
+            loaded
+              ? "opacity-100 translate-y-0 blur-0"
+              : "opacity-0 translate-y-4 blur-sm"
+          }`}
+        >
           <button
             onClick={() => setMenuOpen((p) => !p)}
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl border border-[hsl(210,30%,20%)] bg-[hsl(220,15%,8%)] text-sm font-semibold tracking-wide uppercase transition-all duration-300 hover:border-[hsl(210,80%,50%,0.4)] hover:shadow-[0_0_40px_hsl(210,100%,55%,0.12)] active:scale-[0.97]"
+            className="group inline-flex items-center gap-3 px-8 py-4 rounded-lg border border-red-900/40 bg-black/50 backdrop-blur-sm text-sm font-semibold tracking-[0.15em] uppercase transition-all duration-300 hover:border-red-500/60 hover:shadow-[0_0_30px_rgba(220,38,38,0.2)] active:scale-[0.97]"
           >
-            Explore Platform
+            Enter System
             <ArrowRight
               size={16}
               className="transition-transform duration-300 group-hover:translate-x-1"
             />
           </button>
 
-          {/* Dropdown menu */}
+          {/* Dropdown */}
           {menuOpen && (
             <>
-              {/* Backdrop */}
               <div
                 className="fixed inset-0 z-40"
                 onClick={() => setMenuOpen(false)}
               />
-              {/* Menu */}
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 z-50 w-56 rounded-2xl border border-[hsl(210,20%,16%)] bg-[hsl(220,15%,7%,0.92)] backdrop-blur-xl p-2 shadow-2xl animate-in fade-in-0 slide-in-from-top-3 duration-200">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 z-50 w-56 rounded-xl border border-red-900/30 bg-black/80 backdrop-blur-xl p-2 shadow-[0_8px_40px_rgba(0,0,0,0.6)] animate-in fade-in-0 slide-in-from-top-3 duration-200">
                 {menuItems.map((item, i) => (
                   <button
                     key={item.to}
@@ -83,7 +227,7 @@ export default function Home() {
                       setMenuOpen(false);
                       navigate(item.to);
                     }}
-                    className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-sm text-[hsl(210,15%,65%)] hover:text-white hover:bg-[hsl(210,30%,15%,0.5)] transition-colors duration-150"
+                    className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm text-white/50 hover:text-white hover:bg-red-950/40 transition-colors duration-150"
                     style={{ animationDelay: `${i * 30}ms` }}
                   >
                     <item.icon size={16} className="shrink-0" />
@@ -96,8 +240,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Bottom line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[hsl(210,80%,50%,0.2)] to-transparent" />
+      {/* Bottom neon line */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-px z-20"
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(220,38,38,0.4), transparent)",
+          boxShadow: "0 0 20px rgba(220,38,38,0.3)",
+        }}
+      />
     </div>
   );
 }
