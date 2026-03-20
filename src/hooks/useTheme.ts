@@ -1,15 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 
-export type ThemeMode = "dark-neon" | "black-neon" | "light";
+export type ThemeMode = "black-neon" | "light";
 
 const THEME_KEY = "mah-quantum-theme";
 
 export function useTheme() {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     if (typeof window !== "undefined") {
-      return (localStorage.getItem(THEME_KEY) as ThemeMode) || "dark-neon";
+      const stored = localStorage.getItem(THEME_KEY);
+      if (stored === "light") return "light";
     }
-    return "dark-neon";
+    return "black-neon";
   });
 
   const setTheme = useCallback((t: ThemeMode) => {
@@ -19,9 +20,8 @@ export function useTheme() {
 
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.remove("theme-black-neon", "theme-light");
-    if (theme === "black-neon") root.classList.add("theme-black-neon");
-    else if (theme === "light") root.classList.add("theme-light");
+    root.classList.remove("theme-light");
+    if (theme === "light") root.classList.add("theme-light");
   }, [theme]);
 
   return { theme, setTheme };
