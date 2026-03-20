@@ -14,7 +14,6 @@ const navLinks = [
 ];
 
 const themes: { value: ThemeMode; label: string }[] = [
-  { value: "dark-neon", label: "Dark Neon" },
   { value: "black-neon", label: "Black Neon" },
   { value: "light", label: "Light" },
 ];

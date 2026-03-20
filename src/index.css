@@ -5,65 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @layer base {
-  /* Dark Neon RGB Theme (default) */
+  /* Black Neon Theme (default) */
   :root {
-    --background: 230 25% 7%;
-    --foreground: 210 40% 93%;
-
-    --card: 230 25% 10%;
-    --card-foreground: 210 40% 93%;
-
-    --popover: 230 25% 10%;
-    --popover-foreground: 210 40% 93%;
-
-    --primary: 210 100% 60%;
-    --primary-foreground: 230 25% 5%;
-
-    --secondary: 270 60% 55%;
-    --secondary-foreground: 210 40% 95%;
-
-    --muted: 230 20% 15%;
-    --muted-foreground: 215 20% 60%;
-
-    --accent: 280 80% 60%;
-    --accent-foreground: 210 40% 95%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 230 20% 18%;
-    --input: 230 20% 18%;
-    --ring: 210 100% 60%;
-
-    --radius: 0.75rem;
-
-    /* Custom tokens */
-    --glow-primary: 210 100% 60%;
-    --glow-secondary: 270 80% 60%;
-    --glow-accent: 320 80% 60%;
-    --glass-bg: 230 25% 12%;
-    --glass-border: 230 20% 22%;
-    --gradient-start: 210 100% 60%;
-    --gradient-mid: 270 80% 60%;
-    --gradient-end: 320 80% 60%;
-    --surface-elevated: 230 25% 12%;
-    --neon-blue: 210 100% 60%;
-    --neon-purple: 270 80% 60%;
-    --neon-pink: 320 80% 60%;
-    --neon-cyan: 185 100% 55%;
-
-    --sidebar-background: 230 25% 8%;
-    --sidebar-foreground: 210 40% 93%;
-    --sidebar-primary: 210 100% 60%;
-    --sidebar-primary-foreground: 230 25% 5%;
-    --sidebar-accent: 230 20% 15%;
-    --sidebar-accent-foreground: 210 40% 93%;
-    --sidebar-border: 230 20% 18%;
-    --sidebar-ring: 210 100% 60%;
-  }
-
-  /* Black Neon Theme */
-  .theme-black-neon {
     --background: 0 0% 3%;
     --foreground: 0 0% 90%;
 
@@ -85,9 +28,14 @@
     --accent: 320 90% 55%;
     --accent-foreground: 0 0% 95%;
 
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
     --border: 0 0% 12%;
     --input: 0 0% 12%;
     --ring: 210 100% 55%;
+
+    --radius: 0.75rem;
 
     --glow-primary: 210 100% 55%;
     --glow-secondary: 280 70% 50%;
@@ -102,6 +50,15 @@
     --neon-purple: 280 70% 50%;
     --neon-pink: 320 90% 55%;
     --neon-cyan: 185 100% 50%;
+
+    --sidebar-background: 0 0% 4%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 210 100% 55%;
+    --sidebar-primary-foreground: 0 0% 2%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 210 100% 55%;
   }
 
   /* Light Theme */
