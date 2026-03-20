@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Section from "@/components/Section";
 import GlassCard from "@/components/GlassCard";
-import NeuralBackground from "@/components/NeuralBackground";
 import { Brain, Globe, RefreshCw, Layers, ArrowRight, Sparkles } from "lucide-react";
 
 const highlights = [
@@ -19,8 +18,7 @@ export default function Home() {
     <Layout>
       {/* Hero */}
       <section className="relative min-h-[92vh] flex items-center overflow-hidden animated-gradient-bg">
-        <NeuralBackground className="opacity-70" nodeCount={65} connectionDistance={160} />
-        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-20" />
 
         {/* Animated orbs */}
         <div className="orb orb-blue w-[500px] h-[500px] top-[10%] -left-40 animate-orb-drift" />
@@ -96,12 +94,14 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* Neon divider */}
       <div className="neon-line mx-auto max-w-4xl" />
 
       {/* Architecture Preview */}
       <Section className="py-24 lg:py-32">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="glass rounded-3xl p-10 lg:p-16 glow-multi max-w-4xl mx-auto text-center space-y-6 relative overflow-hidden">
+            {/* Background orb */}
             <div className="orb orb-blue w-[300px] h-[300px] top-[-20%] right-[-10%] animate-pulse-glow" />
             <h2 className="font-display font-bold text-3xl sm:text-4xl relative z-10">
               Quantum <span className="text-primary glow-text">[-0-]</span> Brain

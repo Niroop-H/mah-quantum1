@@ -2,7 +2,6 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import Section from "@/components/Section";
 import GlassCard from "@/components/GlassCard";
-import NeuralBackground from "@/components/NeuralBackground";
 import { Eye, Database, Cpu, Map, RefreshCw, Circle } from "lucide-react";
 
 const layers = [
@@ -58,8 +57,7 @@ export default function Architecture() {
     <Layout>
       {/* Header */}
       <section className="relative py-24 lg:py-32 overflow-hidden animated-gradient-bg">
-        <NeuralBackground className="opacity-50" nodeCount={40} connectionDistance={130} />
-        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
         <div className="orb orb-blue w-[500px] h-[500px] top-[-20%] left-[40%] animate-orb-drift" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center space-y-4">
           <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08]">
@@ -77,6 +75,7 @@ export default function Architecture() {
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="font-display font-bold text-2xl sm:text-3xl text-center mb-14">Intelligence Layers</h2>
           <div className="grid lg:grid-cols-[280px_1fr] gap-6 max-w-5xl mx-auto">
+            {/* Tabs */}
             <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
               {layers.map((l, i) => (
                 <button
@@ -94,6 +93,7 @@ export default function Architecture() {
               ))}
             </div>
 
+            {/* Content */}
             <GlassCard glow glowColor={layers[active].color} className="min-h-[220px] flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-4">
                 {(() => {
