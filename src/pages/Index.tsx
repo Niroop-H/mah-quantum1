@@ -217,7 +217,7 @@ export default function Home() {
                 className="fixed inset-0 z-40"
                 onClick={() => setMenuOpen(false)}
               />
-              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 z-50 w-56 rounded-xl border border-red-900/30 bg-black/80 backdrop-blur-xl p-2 shadow-[0_8px_40px_rgba(0,0,0,0.6)] animate-in fade-in-0 slide-in-from-top-3 duration-200">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-3 z-50 w-56 rounded-xl border border-white/[0.08] bg-black/70 backdrop-blur-2xl p-2 shadow-[0_8px_40px_rgba(0,0,0,0.6),inset_0_1px_0_0_rgba(255,255,255,0.05)] animate-in fade-in-0 slide-in-from-top-3 duration-200">
                 {menuItems.map((item, i) => (
                   <button
                     key={item.to}
@@ -225,7 +225,7 @@ export default function Home() {
                       setMenuOpen(false);
                       navigate(item.to);
                     }}
-                    className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm text-white/50 hover:text-white hover:bg-red-950/40 transition-colors duration-150"
+                    className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-sm text-white/50 hover:text-white hover:bg-white/[0.06] transition-colors duration-150"
                     style={{ animationDelay: `${i * 30}ms` }}
                   >
                     <item.icon size={16} className="shrink-0" />
@@ -235,6 +235,7 @@ export default function Home() {
               </div>
             </>
           )}
+          </div>
         </div>
       </div>
 
