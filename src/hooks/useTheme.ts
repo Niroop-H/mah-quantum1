@@ -8,9 +8,9 @@ export function useTheme() {
   const [theme, setThemeState] = useState<ThemeMode>(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem(THEME_KEY);
-      if (stored === "light") return "light";
+      if (stored === "black-neon") return "black-neon";
     }
-    return "black-neon";
+    return "light";
   });
 
   const setTheme = useCallback((t: ThemeMode) => {
