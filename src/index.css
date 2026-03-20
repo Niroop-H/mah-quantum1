@@ -369,3 +369,18 @@
   66% { transform: translate(-20px, 15px) scale(0.95); }
   100% { transform: translate(10px, -10px) scale(1.05); }
 }
+
+@keyframes borderGlow {
+  0% {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 6px rgba(220,38,38,0.3));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(220,38,38,0.5));
+  }
+  100% {
+    opacity: 0.5;
+    filter: drop-shadow(0 0 6px rgba(220,38,38,0.3));
+  }
+}
