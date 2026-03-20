@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Cpu, Factory, FlaskConical, Users, Mail, User } from "lucide-react";
 import { useTheme, ThemeMode } from "@/hooks/useTheme";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import logo from "@/assets/mah-quantum-logo.jpeg";
 
 const navLinks = [
@@ -11,6 +18,14 @@ const navLinks = [
   { label: "Labs", to: "/labs" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
+];
+
+const dropdownLinks = [
+  { label: "Architecture", to: "/architecture", icon: Cpu },
+  { label: "Industries", to: "/industries", icon: Factory },
+  { label: "Labs", to: "/labs", icon: FlaskConical },
+  { label: "About", to: "/about", icon: Users },
+  { label: "Contact", to: "/contact", icon: Mail },
 ];
 
 const themes: { value: ThemeMode; label: string }[] = [
@@ -49,21 +64,59 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Theme toggle */}
-        <div className="hidden lg:flex items-center gap-1 glass rounded-full px-1 py-1">
-          {themes.map((t) => (
-            <button
-              key={t.value}
-              onClick={() => setTheme(t.value)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
-                theme === t.value
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+        {/* Right side: theme toggle + profile dropdown */}
+        <div className="hidden lg:flex items-center gap-3">
+          {/* Theme toggle */}
+          <div className="flex items-center gap-1 glass rounded-full px-1 py-1">
+            {themes.map((t) => (
+              <button
+                key={t.value}
+                onClick={() => setTheme(t.value)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                  theme === t.value
+                    ? "bg-primary text-primary-foreground shadow-md"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Profile dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="h-9 w-9 rounded-full glass border border-border/20 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 active:scale-95">
+                <User size={18} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              sideOffset={8}
+              className="w-52 glass-strong border-border/20 rounded-xl p-1.5 shadow-xl animate-in fade-in-0 slide-in-from-top-2 duration-200"
             >
-              {t.label}
-            </button>
-          ))}
+              <div className="px-3 py-2 mb-1">
+                <p className="text-xs font-semibold text-foreground">Navigate</p>
+                <p className="text-[11px] text-muted-foreground">Quick access</p>
+              </div>
+              <DropdownMenuSeparator className="bg-border/20" />
+              {dropdownLinks.map((item) => (
+                <DropdownMenuItem key={item.to} asChild>
+                  <Link
+                    to={item.to}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm cursor-pointer transition-colors duration-150 ${
+                      location.pathname === item.to
+                        ? "text-primary bg-primary/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    }`}
+                  >
+                    <item.icon size={16} />
+                    {item.label}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Mobile toggle */}
