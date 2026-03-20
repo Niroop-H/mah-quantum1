@@ -25,94 +25,96 @@ export default function Contact() {
 
   return (
     <Layout>
-      <section className="relative py-28 lg:py-36 overflow-hidden">
-        <div className="absolute inset-0 grid-overlay opacity-30" />
+      <section className="relative py-24 lg:py-32 overflow-hidden animated-gradient-bg">
+        <div className="absolute inset-0 bg-grid-pattern opacity-15" />
+        <div className="orb orb-blue w-[400px] h-[400px] bottom-[-20%] left-[10%] animate-orb-drift" />
         <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center space-y-4">
-          <p className="mono-label">Get in touch</p>
-          <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08] text-foreground">
-            Contact Us
+          <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08]">
+            <span className="gradient-text">Contact</span> Us
           </h1>
-          <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-            Explore how MAH Quantum can transform your operations.
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Get in touch to explore how MAH Quantum can transform your operations.
           </p>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 tech-divider" />
+        <div className="absolute bottom-0 left-0 right-0 neon-line" />
       </section>
 
       <Section className="py-20 lg:py-28">
         <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-          <div className="grid md:grid-cols-[1fr_1.5fr] gap-4">
-            <div className="space-y-3">
-              <GlassCard>
+          <div className="grid md:grid-cols-[1fr_1.5fr] gap-6">
+            {/* Info */}
+            <div className="space-y-4">
+              <GlassCard glow glowColor="blue">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-md bg-muted">
-                    <Phone className="h-4 w-4 text-foreground" />
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Phone className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="mono-label">Phone</p>
-                    <a href="tel:+917259382794" className="text-xs font-medium text-foreground hover:underline">
+                    <p className="text-xs text-muted-foreground">Phone</p>
+                    <a href="tel:+917259382794" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                       +91 7259382794
                     </a>
                   </div>
                 </div>
               </GlassCard>
-              <GlassCard>
+              <GlassCard glow glowColor="purple">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-md bg-muted">
-                    <Mail className="h-4 w-4 text-foreground" />
+                  <div className="p-2 rounded-lg bg-secondary/10">
+                    <Mail className="h-5 w-5 text-secondary" />
                   </div>
                   <div>
-                    <p className="mono-label">Email</p>
-                    <a href="mailto:nirooph1@gmail.com" className="text-xs font-medium text-foreground hover:underline">
+                    <p className="text-xs text-muted-foreground">Email</p>
+                    <a href="mailto:nirooph1@gmail.com" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
                       nirooph1@gmail.com
                     </a>
                   </div>
                 </div>
               </GlassCard>
-              <GlassCard>
+              <GlassCard glow glowColor="pink">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-md bg-muted">
-                    <MapPin className="h-4 w-4 text-foreground" />
+                  <div className="p-2 rounded-lg bg-accent/10">
+                    <MapPin className="h-5 w-5 text-accent" />
                   </div>
                   <div>
-                    <p className="mono-label">Location</p>
-                    <p className="text-xs font-medium text-foreground">India</p>
+                    <p className="text-xs text-muted-foreground">Location</p>
+                    <p className="text-sm font-medium text-foreground">India</p>
                   </div>
                 </div>
               </GlassCard>
             </div>
 
-            <GlassCard>
-              <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Form */}
+            <GlassCard glow glowColor="multi">
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label className="mono-label mb-1.5 block">Name</label>
+                  <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">Name</label>
                   <input
                     type="text"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-md bg-muted/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-muted/40 border border-border/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/30 transition-all"
                     placeholder="Your name"
                     maxLength={100}
                   />
                 </div>
                 <div>
-                  <label className="mono-label mb-1.5 block">Email</label>
+                  <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">Email</label>
                   <input
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-md bg-muted/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
+                    className="w-full px-4 py-3 rounded-xl bg-muted/40 border border-border/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/30 transition-all"
                     placeholder="your@email.com"
                     maxLength={255}
                   />
                 </div>
                 <div>
-                  <label className="mono-label mb-1.5 block">Message</label>
+                  <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">Message</label>
                   <textarea
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     rows={4}
-                    className="w-full px-3.5 py-2.5 rounded-md bg-muted/50 border border-border text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-muted/40 border border-border/40 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/30 transition-all resize-none"
                     placeholder="How can we help?"
                     maxLength={1000}
                   />
@@ -120,9 +122,9 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-md bg-foreground text-background font-medium text-sm hover:bg-foreground/90 transition-all active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:shadow-[0_0_30px_hsl(var(--neon-blue)/0.35)] transition-all active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Send size={14} />
+                  <Send size={16} />
                   {sending ? "Sending..." : "Send Message"}
                 </button>
               </form>
